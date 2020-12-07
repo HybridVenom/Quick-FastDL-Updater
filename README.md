@@ -1,6 +1,10 @@
 # Quick FastDL Updater
 Quick and automatic FastDL updater. This application will compress maps (filtered by prefix) from your dedicated CS:GO server to given FastDL path.
 
+## Preview
+30s v0.5-beta preview
+![v0.5-beta Preview](https://i.imgur.com/q3sE4MN.gif)
+
 ## Todo and bugs 🐛
 ### Todo
 - [x] Start: Get base program working (i.e compress maps to Bz2 (optional: filtered by prefix) -> add to FastDL maps folder)
