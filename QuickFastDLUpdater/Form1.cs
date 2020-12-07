@@ -49,38 +49,7 @@ namespace QuickFastDLUpdater
 
         private void btnPreCheck_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxServerpath.Text)) // Check if server textbox has text
-            {
-                MessageBox.Show("Server path: GIVEN\n\nNo server path was given.", "No server path given", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else if (string.IsNullOrWhiteSpace(textBoxFastDLpath.Text)) // Check if fastdl textbox has text
-            {
-                MessageBox.Show("Server path: GIVEN\nFastDL path: NOT GIVEN\n\nNo path to FastDL was given.", "No FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            bool srcdsExists = false; // Assume false
-            FileInfo[] serverFiles = new DirectoryInfo(textBoxServerpath.Text).GetFiles();
-
-            foreach (FileInfo file in serverFiles)
-                if (file.Name == "srcds.exe")
-                {
-                    srcdsExists = true;
-                    break;
-                }
-
-            if (!srcdsExists)
-            {
-                MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (!Directory.Exists(textBoxFastDLpath.Text))
-            {
-                MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path does not exist.", "FastDL path does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            sanitycheck();
 
             string fullMapPrefix = textBoxPrefix.Text;
             string[] prefixArr = null;
@@ -139,6 +108,43 @@ namespace QuickFastDLUpdater
         private void linkLabelGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(@"https://github.com/HybridVenom");
+        }
+
+        // Funcs
+        private void sanitycheck()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxServerpath.Text)) // Check if server textbox has text
+            {
+                MessageBox.Show("Server path: GIVEN\n\nNo server path was given.", "No server path given", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(textBoxFastDLpath.Text)) // Check if fastdl textbox has text
+            {
+                MessageBox.Show("Server path: GIVEN\nFastDL path: NOT GIVEN\n\nNo path to FastDL was given.", "No FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            bool srcdsExists = false; // Assume false
+            FileInfo[] serverFiles = new DirectoryInfo(textBoxServerpath.Text).GetFiles();
+
+            foreach (FileInfo file in serverFiles)
+                if (file.Name == "srcds.exe")
+                {
+                    srcdsExists = true;
+                    break;
+                }
+
+            if (!srcdsExists)
+            {
+                MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!Directory.Exists(textBoxFastDLpath.Text))
+            {
+                MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path does not exist.", "FastDL path does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
     }
 }
