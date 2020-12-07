@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ICSharpCode.SharpZipLib.BZip2;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -67,14 +68,11 @@ namespace QuickFastDLUpdater
             if (fullMapPrefix != null)
                 prefixArr = fullMapPrefix.Split('/');
 
-            DirectoryInfo di;
-            FileInfo[] filesArr;
+            DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
+            FileInfo[] filesArr = di.GetFiles("*.bsp");
 
             // .\csgo\maps
             int mapCount = 0;
-
-            di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
-            filesArr = di.GetFiles("*.bsp");
 
             if (fullMapPrefix == null)
                 mapCount = filesArr.Length;
@@ -98,7 +96,77 @@ namespace QuickFastDLUpdater
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            setStatusText("Starting...");
+            if (!sanitycheck())
+                return;
+
+            setStatusText("Reading prefix(es)...");
+            string fullMapPrefix = textBoxPrefix.Text;
+            string[] prefixArr = null;
+            if (string.IsNullOrWhiteSpace(textBoxPrefix.Text))
+            {
+                DialogResult result = MessageBox.Show("No map prefix was given (all maps will be counted.)\n\nWould you like to cancel and add a map prefix?", "No map prefix given", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes || result == DialogResult.Cancel)
+                    return;
+                else
+                    fullMapPrefix = null;
+            }
+
+            if (fullMapPrefix != null)
+                prefixArr = fullMapPrefix.Split('/');
+
+            setStatusText("Getting .bsp files from /csgo/maps ...");
+            DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
+            FileInfo[] filesArr = di.GetFiles("*.bsp");
             
+            if (fullMapPrefix == null) // Compress all .bsp files
+            {
+                foreach (FileInfo file in filesArr) // file: the file that is going to be compressed
+                {
+                    FileInfo compressedFile = new FileInfo(textBoxFastDLpath.Text + @"\maps\" + file.Name + ".bz2"); // compressedFile: Output, compressed file
+                    using (FileStream fileStream = file.OpenRead()) 
+                    {
+                        using (FileStream compressedFileStream = compressedFile.Create())
+                        {
+                            try
+                            {
+                                BZip2.Compress(fileStream, compressedFileStream, true, 4096);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (prefixArr != null) // Compress .bsp files matching prefix
+                foreach (FileInfo file in filesArr)
+                    for (int i = 0; i < prefixArr.Length; i++)
+                        if (file.Name.StartsWith(prefixArr[i]))
+                        {
+                            setStatusText("Compressing " + file.Name + "...");
+                            FileInfo compressedFile = new FileInfo(textBoxFastDLpath.Text + @"\maps\" + file.Name + ".bz2"); // compressedFile: Output, compressed file
+                            using (FileStream fileStream = file.OpenRead())
+                            {
+                                using (FileStream compressedFileStream = compressedFile.Create())
+                                {
+                                    try
+                                    {
+                                        BZip2.Compress(fileStream, compressedFileStream, true, 4096);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+
+            setStatusText("Ready");
         }
 
         private void linkLabelSteam_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -114,14 +182,17 @@ namespace QuickFastDLUpdater
         // Funcs
         private bool sanitycheck()
         {
+            setStatusText("Sanity check started...");
             if (string.IsNullOrWhiteSpace(textBoxServerpath.Text)) // Check if server textbox has text
             {
                 MessageBox.Show("Server path: GIVEN\n\nNo server path was given.", "No server path given", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
             else if (string.IsNullOrWhiteSpace(textBoxFastDLpath.Text)) // Check if fastdl textbox has text
             {
                 MessageBox.Show("Server path: GIVEN\nFastDL path: NOT GIVEN\n\nNo path to FastDL was given.", "No FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
 
@@ -138,16 +209,31 @@ namespace QuickFastDLUpdater
             if (!srcdsExists)
             {
                 MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
 
             if (!Directory.Exists(textBoxFastDLpath.Text))
             {
                 MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path does not exist.", "FastDL path does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
 
+            if (!Directory.Exists(textBoxFastDLpath.Text + @"\maps"))
+            {
+                MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path is missing a \"maps\" folder.", "FastDL path missing \"maps\" folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                setStatusText("Sanity check: FAILED");
+                return false;
+            }
+
+            setStatusText("Sanity check: OK. Ready");
             return true;
+        }
+
+        private void setStatusText(string text)
+        {
+            labelStatusText.Text = text;
         }
     }
 }
