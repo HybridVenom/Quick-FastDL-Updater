@@ -6,7 +6,7 @@ Quick and automatic FastDL updater. This application will compress maps (filtere
 [Download](https://github.com/HybridVenom/Quick-FastDL-Updater/releases/tag/v0.5-beta)
 
 ## Preview
-30s v0.5-beta preview
+A 30 second preview of [v0.5-beta](https://github.com/HybridVenom/Quick-FastDL-Updater/releases/tag/v0.5-beta)
 ![v0.5-beta Preview](https://i.imgur.com/q3sE4MN.gif)
 
 ## Todo and bugs 🐛
@@ -19,9 +19,10 @@ Quick and automatic FastDL updater. This application will compress maps (filtere
 - [ ] Application window: Make application window scale items correctly
 - [ ] Compression level: Add different levels of compression
 - [ ] Help button: Add a help button :)
+- [ ] Skip existing: Add an option to skip re-compressing already existing files in the FastDL directory.
 
 ### Known bugs 🐛
-- [ ] Map prefix(es): `bhop/ar/cs/` -> empty enty in prefixArr makes it count ALL files (inc. folders)
+- [ ] Map prefix(es): `bhop/ar/cs/` -> Expected: filter by "bhop", "ar" and "cs". Result: 4th entry is empty, makes it count ALL files (inc. folders)
 
 ## Explanation of fields
 - CS:GO Server path: The full path to the root of your dedicated CS:GO server ("root" is the folder that contains "srcds.exe")
