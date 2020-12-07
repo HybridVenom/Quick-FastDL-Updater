@@ -51,12 +51,12 @@ namespace QuickFastDLUpdater
         {
             if (string.IsNullOrWhiteSpace(textBoxServerpath.Text)) // Check if server textbox has text
             {
-                MessageBox.Show("Please check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else if (string.IsNullOrWhiteSpace(textBoxFastDLpath.Text)) // Check if fastdl textbox has text
             {
-                MessageBox.Show("Please check if you entered a correct path to the FastDL folder.", "Invalid FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nPlease check if you entered a correct path to the FastDL folder.", "Invalid FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -93,10 +93,10 @@ namespace QuickFastDLUpdater
                             mapCount++;
 
             if (fullMapPrefix == null)
-                MessageBox.Show("Map count (*.bsp): " + mapCount, "Pre-check scan complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Server path: OK\nFastDL path: VALID\n\nMap count (*.bsp): " + mapCount, "Pre-check scan complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
             {
-                string msg = "Map count (*.bsp): " + mapCount + "\nPrefix(es): ";
+                string msg = "Server path: OK\nFastDL path: VALID\n\nMap count (*.bsp): " + mapCount + "\nPrefix(es): ";
                 foreach (string prefix in prefixArr)
                     msg += prefix + ", ";
 
