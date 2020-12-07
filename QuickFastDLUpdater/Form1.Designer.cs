@@ -50,6 +50,10 @@ namespace QuickFastDLUpdater
             this.toolTipPrefix = new System.Windows.Forms.ToolTip(this.components);
             this.toolTipPrecheck = new System.Windows.Forms.ToolTip(this.components);
             this.toolTipStart = new System.Windows.Forms.ToolTip(this.components);
+            this.trackBarCompressionLevel = new System.Windows.Forms.TrackBar();
+            this.labelCompressionLevel = new System.Windows.Forms.Label();
+            this.labelCompressionWarning = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarCompressionLevel)).BeginInit();
             this.SuspendLayout();
             // 
             // labelStatusText
@@ -112,7 +116,8 @@ namespace QuickFastDLUpdater
             this.textBoxServerpath.Name = "textBoxServerpath";
             this.textBoxServerpath.Size = new System.Drawing.Size(281, 20);
             this.textBoxServerpath.TabIndex = 0;
-            this.toolTipServerPath.SetToolTip(this.textBoxServerpath, "Enter the path to your dedicate CS:GO server (same folder as \'srcds.exe\').");
+            this.textBoxServerpath.Text = "D:\\Program Files (x86)\\CSGO Server";
+            this.toolTipServerPath.SetToolTip(this.textBoxServerpath, "Enter the path to your dedicated CS:GO server (same folder as \'srcds.exe\').");
             // 
             // textBoxFastDLpath
             // 
@@ -120,6 +125,8 @@ namespace QuickFastDLUpdater
             this.textBoxFastDLpath.Name = "textBoxFastDLpath";
             this.textBoxFastDLpath.Size = new System.Drawing.Size(281, 20);
             this.textBoxFastDLpath.TabIndex = 2;
+            this.textBoxFastDLpath.Text = "C:\\Users\\alexa\\Desktop\\XD\\maps";
+            this.toolTipServerPath.SetToolTip(this.textBoxFastDLpath, "Enter the path to your FastDL folder.");
             // 
             // btnBrowseServer
             // 
@@ -143,35 +150,38 @@ namespace QuickFastDLUpdater
             // 
             // btnPreCheck
             // 
-            this.btnPreCheck.Location = new System.Drawing.Point(155, 198);
+            this.btnPreCheck.Location = new System.Drawing.Point(155, 265);
             this.btnPreCheck.Name = "btnPreCheck";
             this.btnPreCheck.Size = new System.Drawing.Size(75, 20);
-            this.btnPreCheck.TabIndex = 5;
+            this.btnPreCheck.TabIndex = 6;
             this.btnPreCheck.Text = "Pre-check";
+            this.toolTipServerPath.SetToolTip(this.btnPreCheck, "Validate your paths and see how many maps were found (with or without a filter).");
             this.btnPreCheck.UseVisualStyleBackColor = true;
             this.btnPreCheck.Click += new System.EventHandler(this.btnPreCheck_Click);
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(155, 246);
+            this.btnStart.Location = new System.Drawing.Point(155, 313);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 20);
-            this.btnStart.TabIndex = 6;
+            this.btnStart.TabIndex = 7;
             this.btnStart.Text = "Start";
+            this.toolTipServerPath.SetToolTip(this.btnStart, "Starts compressing the maps and adds them to given FastDL path.");
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // textBoxPrefix
             // 
-            this.textBoxPrefix.Location = new System.Drawing.Point(155, 151);
+            this.textBoxPrefix.Location = new System.Drawing.Point(155, 218);
             this.textBoxPrefix.Name = "textBoxPrefix";
             this.textBoxPrefix.Size = new System.Drawing.Size(77, 20);
-            this.textBoxPrefix.TabIndex = 4;
+            this.textBoxPrefix.TabIndex = 5;
+            this.toolTipServerPath.SetToolTip(this.textBoxPrefix, "Filter maps by their prefix(es).\nEx. one: \"de\"\nEx. multiple: \"bhop/kz\".");
             // 
             // labelPrefix
             // 
             this.labelPrefix.AutoSize = true;
-            this.labelPrefix.Location = new System.Drawing.Point(157, 135);
+            this.labelPrefix.Location = new System.Drawing.Point(157, 202);
             this.labelPrefix.Name = "labelPrefix";
             this.labelPrefix.Size = new System.Drawing.Size(73, 13);
             this.labelPrefix.TabIndex = 15;
@@ -187,33 +197,65 @@ namespace QuickFastDLUpdater
             // toolTipServerPath
             // 
             this.toolTipServerPath.ToolTipTitle = "CS:GO Server path";
-            this.toolTipServerPath.SetToolTip(textBoxServerpath, "Enter the path to your dedicated CS:GO server (same folder as 'srcds.exe').");
             // 
             // toolTipFastDLPath
             // 
             this.toolTipFastDLPath.ToolTipTitle = "FastDL path";
-            this.toolTipServerPath.SetToolTip(textBoxFastDLpath, "Enter the path to your FastDL folder.");
             // 
             // toolTipPrefix
             // 
             this.toolTipPrefix.ToolTipTitle = "Map prefix(es)";
-            this.toolTipServerPath.SetToolTip(textBoxPrefix, "Filter maps by their prefix(es).\nEx. one: \"de\"\nEx. multiple: \"bhop/kz\".");
             // 
             // toolTipPrecheck
             // 
             this.toolTipPrecheck.ToolTipTitle = "Pre-check";
-            this.toolTipServerPath.SetToolTip(btnPreCheck, "Validate your paths and see how many maps were found (with or without a filter).");
             // 
             // toolTipStart
             // 
             this.toolTipStart.ToolTipTitle = "Start";
-            this.toolTipServerPath.SetToolTip(btnStart, "Starts compressing the maps and adds them to given FastDL path.");
+            // 
+            // trackBarCompressionLevel
+            // 
+            this.trackBarCompressionLevel.LargeChange = 1;
+            this.trackBarCompressionLevel.Location = new System.Drawing.Point(12, 132);
+            this.trackBarCompressionLevel.Maximum = 9;
+            this.trackBarCompressionLevel.Minimum = 1;
+            this.trackBarCompressionLevel.Name = "trackBarCompressionLevel";
+            this.trackBarCompressionLevel.Size = new System.Drawing.Size(360, 45);
+            this.trackBarCompressionLevel.TabIndex = 4;
+            this.trackBarCompressionLevel.Value = 1;
+            this.trackBarCompressionLevel.Scroll += new System.EventHandler(this.trackBarCompressionLevel_Scroll);
+            // 
+            // labelCompressionLevel
+            // 
+            this.labelCompressionLevel.AutoSize = true;
+            this.labelCompressionLevel.Location = new System.Drawing.Point(142, 116);
+            this.labelCompressionLevel.Name = "labelCompressionLevel";
+            this.labelCompressionLevel.Size = new System.Drawing.Size(104, 13);
+            this.labelCompressionLevel.TabIndex = 103;
+            this.labelCompressionLevel.Text = "Compression level: 1";
+            this.labelCompressionLevel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelCompressionWarning
+            // 
+            this.labelCompressionWarning.AutoSize = true;
+            this.labelCompressionWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCompressionWarning.ForeColor = System.Drawing.Color.Red;
+            this.labelCompressionWarning.Location = new System.Drawing.Point(18, 161);
+            this.labelCompressionWarning.Name = "labelCompressionWarning";
+            this.labelCompressionWarning.Size = new System.Drawing.Size(349, 13);
+            this.labelCompressionWarning.TabIndex = 104;
+            this.labelCompressionWarning.Text = "High compression levels greatly increases compression time!";
+            this.labelCompressionWarning.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 450);
+            this.Controls.Add(this.labelCompressionWarning);
+            this.Controls.Add(this.labelCompressionLevel);
+            this.Controls.Add(this.trackBarCompressionLevel);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.labelPrefix);
             this.Controls.Add(this.textBoxPrefix);
@@ -231,6 +273,7 @@ namespace QuickFastDLUpdater
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Quick FastDL Updater";
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarCompressionLevel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,6 +300,9 @@ namespace QuickFastDLUpdater
         private System.Windows.Forms.ToolTip toolTipPrefix;
         private System.Windows.Forms.ToolTip toolTipPrecheck;
         private System.Windows.Forms.ToolTip toolTipStart;
+        private System.Windows.Forms.TrackBar trackBarCompressionLevel;
+        private System.Windows.Forms.Label labelCompressionLevel;
+        private System.Windows.Forms.Label labelCompressionWarning;
     }
 }
 

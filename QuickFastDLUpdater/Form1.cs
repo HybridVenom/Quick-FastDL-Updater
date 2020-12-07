@@ -49,6 +49,16 @@ namespace QuickFastDLUpdater
             }
         }
 
+        private void trackBarCompressionLevel_Scroll(object sender, EventArgs e)
+        {
+            labelCompressionLevel.Text = "Compression level: " + trackBarCompressionLevel.Value.ToString();
+
+            if (trackBarCompressionLevel.Value > 6)
+                labelCompressionWarning.Visible = true;
+            else
+                labelCompressionWarning.Visible = false;
+        }
+
         private void btnPreCheck_Click(object sender, EventArgs e)
         {
             if (!sanitycheck())
@@ -121,11 +131,13 @@ namespace QuickFastDLUpdater
             DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
             FileInfo[] filesArr = di.GetFiles("*.bsp");
 
+            int compressionLevel = trackBarCompressionLevel.Value;
+
             if (fullMapPrefix == null) // Compress all .bsp files
             {
                 Thread execThread = new Thread(delegate ()
                 {
-                    ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", labelStatusText, this);
+                    ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, this);
                 });
                 execThread.Start();
             }
@@ -134,7 +146,7 @@ namespace QuickFastDLUpdater
 
                 Thread execThread = new Thread(delegate ()
                 {
-                    ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", labelStatusText, this, prefixArr);
+                    ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, prefixArr, labelStatusText, this);
                 });
                 execThread.Start();
             }
@@ -206,5 +218,7 @@ namespace QuickFastDLUpdater
         {
             labelStatusText.Text = text;
         }
+
+
     }
 }

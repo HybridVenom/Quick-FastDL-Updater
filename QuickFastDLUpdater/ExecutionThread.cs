@@ -27,7 +27,7 @@ public static class ExecutionThread
             ctrl.Text = text;
     }
 
-    public static void Compress(FileInfo[] fileArray, string outputPath, Label statusLabel, Form form)
+    public static void Compress(FileInfo[] fileArray, string outputPath, int compressionLevel, Label statusLabel, Form form)
     {
         foreach (FileInfo file in fileArray) // file: the file that is going to be compressed
         {
@@ -39,7 +39,7 @@ public static class ExecutionThread
                 {
                     try
                     {
-                        BZip2.Compress(fileStream, compressedFileStream, true, 4096);
+                        BZip2.Compress(fileStream, compressedFileStream, true, compressionLevel);
                     }
                     catch (Exception ex)
                     {
@@ -52,7 +52,7 @@ public static class ExecutionThread
         setStatusText(form, statusLabel, "Ready");
     }
 
-    public static void Compress(FileInfo[] fileArray, string outputPath, Label statusLabel, Form form, string[] prefixArray)
+    public static void Compress(FileInfo[] fileArray, string outputPath, int compressionLevel, string[] prefixArray, Label statusLabel, Form form)
     {
         foreach (FileInfo file in fileArray) // file: the file that is going to be compressed
             for (int i = 0; i < prefixArray.Length; i++) // Check if current
@@ -66,7 +66,7 @@ public static class ExecutionThread
                         {
                             try
                             {
-                                BZip2.Compress(fileStream, compressedFileStream, true, 4096);
+                                BZip2.Compress(fileStream, compressedFileStream, true, compressionLevel);
                             }
                             catch (Exception ex)
                             {
