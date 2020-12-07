@@ -51,12 +51,28 @@ namespace QuickFastDLUpdater
         {
             if (string.IsNullOrWhiteSpace(textBoxServerpath.Text)) // Check if server textbox has text
             {
-                MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Server path: GIVEN\n\nNo server path was given.", "No server path given", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else if (string.IsNullOrWhiteSpace(textBoxFastDLpath.Text)) // Check if fastdl textbox has text
             {
-                MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nPlease check if you entered a correct path to the FastDL folder.", "Invalid FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Server path: GIVEN\nFastDL path: NOT GIVEN\n\nNo path to FastDL was given.", "No FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            bool srcdsExists = false; // Assume false
+            FileInfo[] serverFiles = new DirectoryInfo(textBoxServerpath.Text).GetFiles();
+
+            foreach (FileInfo file in serverFiles)
+                if (file.Name == "srcds.exe")
+                {
+                    srcdsExists = true;
+                    break;
+                }
+
+            if (!srcdsExists)
+            {
+                MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
