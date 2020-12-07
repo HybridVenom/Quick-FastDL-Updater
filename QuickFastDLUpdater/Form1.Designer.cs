@@ -39,7 +39,7 @@ namespace QuickFastDLUpdater
             this.textBoxFastDLpath = new System.Windows.Forms.TextBox();
             this.btnBrowseServer = new System.Windows.Forms.Button();
             this.btnBrowseFastDL = new System.Windows.Forms.Button();
-            this.btnScan = new System.Windows.Forms.Button();
+            this.btnPreCheck = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.textBoxPrefix = new System.Windows.Forms.TextBox();
             this.labelPrefix = new System.Windows.Forms.Label();
@@ -130,15 +130,15 @@ namespace QuickFastDLUpdater
             this.btnBrowseFastDL.UseVisualStyleBackColor = true;
             this.btnBrowseFastDL.Click += new System.EventHandler(this.btnBrowseFastDL_Click);
             // 
-            // btnScan
+            // btnPreCheck
             // 
-            this.btnScan.Location = new System.Drawing.Point(12, 242);
-            this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(75, 20);
-            this.btnScan.TabIndex = 12;
-            this.btnScan.Text = "Scan";
-            this.btnScan.UseVisualStyleBackColor = true;
-            this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
+            this.btnPreCheck.Location = new System.Drawing.Point(12, 242);
+            this.btnPreCheck.Name = "btnPreCheck";
+            this.btnPreCheck.Size = new System.Drawing.Size(75, 20);
+            this.btnPreCheck.TabIndex = 12;
+            this.btnPreCheck.Text = "Pre-check";
+            this.btnPreCheck.UseVisualStyleBackColor = true;
+            this.btnPreCheck.Click += new System.EventHandler(this.btnPreCheck_Click);
             // 
             // btnStart
             // 
@@ -174,7 +174,7 @@ namespace QuickFastDLUpdater
             this.Controls.Add(this.labelPrefix);
             this.Controls.Add(this.textBoxPrefix);
             this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.btnScan);
+            this.Controls.Add(this.btnPreCheck);
             this.Controls.Add(this.btnBrowseFastDL);
             this.Controls.Add(this.btnBrowseServer);
             this.Controls.Add(this.textBoxFastDLpath);
@@ -203,7 +203,7 @@ namespace QuickFastDLUpdater
         private System.Windows.Forms.TextBox textBoxFastDLpath;
         private System.Windows.Forms.Button btnBrowseServer;
         private System.Windows.Forms.Button btnBrowseFastDL;
-        private System.Windows.Forms.Button btnScan;
+        private System.Windows.Forms.Button btnPreCheck;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.TextBox textBoxPrefix;
         private System.Windows.Forms.Label labelPrefix;
