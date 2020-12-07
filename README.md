@@ -4,8 +4,8 @@ Quick and automatic FastDL updater. This application will compress maps (filtere
 ## Todo
 - [ ] Map prefix(es): `bhop/ar/cs/` -> empty enty in prefixArr makes it count ALL files (inc. folders)
 - [x] Start: Get base program working (i.e compress maps to Bz2 (optional: filtered by prefix) -> add to FastDL maps folder)
-- [ ] Start: Run compression on second thread
-- [ ] Status text: Make the status text show what it is currently doing
+- [x] Start: Run compression on second thread
+- [x] Status text: Make the status text show what it is currently doing
 - [ ] Status image: 
 - [ ] Progress bar: Get it working
 - [ ] Application window: Make application window scale items correctly 
