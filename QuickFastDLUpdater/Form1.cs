@@ -76,13 +76,19 @@ namespace QuickFastDLUpdater
                 return;
             }
 
+            if (!Directory.Exists(textBoxFastDLpath.Text))
+            {
+                MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path does not exist.", "FastDL path does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             string fullMapPrefix = textBoxPrefix.Text;
             string[] prefixArr = null;
             if (string.IsNullOrWhiteSpace(textBoxPrefix.Text))
             {
-                DialogResult result = MessageBox.Show("No map prefix was given (all maps will be added to FastDL.)\n\nWould you like to cancel and add a map prefix?", "No map prefix", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("No map prefix was given (all maps will be counted.)\n\nWould you like to cancel and add a map prefix?", "No map prefix given", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-                if (result == DialogResult.Yes)
+                if (result == DialogResult.Yes || result == DialogResult.Cancel)
                     return;
                 else
                     fullMapPrefix = null;
