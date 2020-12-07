@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -119,13 +120,19 @@ namespace QuickFastDLUpdater
             setStatusText("Getting .bsp files from /csgo/maps ...");
             DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
             FileInfo[] filesArr = di.GetFiles("*.bsp");
-            
+
             if (fullMapPrefix == null) // Compress all .bsp files
             {
+                Thread execThread = new Thread(delegate ()
+                {
+                    ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", labelStatusText, this);
+                });
+                execThread.Start();
+
                 foreach (FileInfo file in filesArr) // file: the file that is going to be compressed
                 {
                     FileInfo compressedFile = new FileInfo(textBoxFastDLpath.Text + @"\maps\" + file.Name + ".bz2"); // compressedFile: Output, compressed file
-                    using (FileStream fileStream = file.OpenRead()) 
+                    using (FileStream fileStream = file.OpenRead())
                     {
                         using (FileStream compressedFileStream = compressedFile.Create())
                         {
@@ -143,30 +150,14 @@ namespace QuickFastDLUpdater
                 }
             }
             else if (prefixArr != null) // Compress .bsp files matching prefix
-                foreach (FileInfo file in filesArr)
-                    for (int i = 0; i < prefixArr.Length; i++)
-                        if (file.Name.StartsWith(prefixArr[i]))
-                        {
-                            setStatusText("Compressing " + file.Name + "...");
-                            FileInfo compressedFile = new FileInfo(textBoxFastDLpath.Text + @"\maps\" + file.Name + ".bz2"); // compressedFile: Output, compressed file
-                            using (FileStream fileStream = file.OpenRead())
-                            {
-                                using (FileStream compressedFileStream = compressedFile.Create())
-                                {
-                                    try
-                                    {
-                                        BZip2.Compress(fileStream, compressedFileStream, true, 4096);
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        return;
-                                    }
-                                }
-                            }
-                        }
+            {
 
-            setStatusText("Ready");
+                Thread execThread = new Thread(delegate ()
+                {
+                    ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", labelStatusText, this, prefixArr);
+                });
+                execThread.Start();
+            }
         }
 
         private void linkLabelSteam_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
