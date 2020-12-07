@@ -19,6 +19,7 @@ A 30 second preview of [v0.5-beta](https://github.com/HybridVenom/Quick-FastDL-U
 - [ ] Application window: Make application window scale items correctly
 - [ ] Compression level: Add different levels of compression
 - [ ] Help button: Add a help button :)
+- [ ] Skip existing: Add an option to skip re-compressing already existing files in the FastDL directory.
 
 ### Known bugs 🐛
 - [ ] Map prefix(es): `bhop/ar/cs/` -> Expected: filter by "bhop", "ar" and "cs". Result: 4th entry is empty, makes it count ALL files (inc. folders)
