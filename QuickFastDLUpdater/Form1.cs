@@ -77,12 +77,11 @@ namespace QuickFastDLUpdater
 
             DirectoryInfo di;
             FileInfo[] filesArr;
-            DirectoryInfo[] directoryArr;
 
             // .\csgo\maps
             int mapCount = 0;
 
-            di = new DirectoryInfo(textBoxServerpath.Text + "\\csgo\\maps");
+            di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
             filesArr = di.GetFiles("*.bsp");
 
             if (fullMapPrefix == null)
@@ -93,27 +92,16 @@ namespace QuickFastDLUpdater
                         if (file.Name.StartsWith(prefixArr[i]))
                             mapCount++;
 
-            // .\materials + iterate each folder
-            // skip "panorama" & "allow1024.txt"
-            int materialFolderCount;
-            int materialCount;
+            if (fullMapPrefix == null)
+                MessageBox.Show("Map count (*.bsp): " + mapCount, "Pre-check scan complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                string msg = "Map count (*.bsp): " + mapCount + "\nPrefix(es): ";
+                foreach (string prefix in prefixArr)
+                    msg += prefix + ", ";
 
-            di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\materials");
-            directoryArr = di.GetDirectories();
-
-            materialFolderCount = directoryArr.Length;
-
-            // .\sound + iterate each folder
-            int soundFolderCount;
-            int soundCount;
-
-            //di = new DirectoryInfo(@"");
-
-
-
-
-
-            MessageBox.Show("Map count (*.bsp): " + mapCount + "\nMaterial dirs.: " + materialFolderCount + "\nMaterials: ");
+                MessageBox.Show(msg, "Pre-check scan complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnStart_Click(object sender, EventArgs e)
