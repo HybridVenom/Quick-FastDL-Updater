@@ -49,7 +49,8 @@ namespace QuickFastDLUpdater
 
         private void btnPreCheck_Click(object sender, EventArgs e)
         {
-            sanitycheck();
+            if (!sanitycheck())
+                return;
 
             string fullMapPrefix = textBoxPrefix.Text;
             string[] prefixArr = null;
@@ -97,7 +98,7 @@ namespace QuickFastDLUpdater
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void linkLabelSteam_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -111,17 +112,17 @@ namespace QuickFastDLUpdater
         }
 
         // Funcs
-        private void sanitycheck()
+        private bool sanitycheck()
         {
             if (string.IsNullOrWhiteSpace(textBoxServerpath.Text)) // Check if server textbox has text
             {
                 MessageBox.Show("Server path: GIVEN\n\nNo server path was given.", "No server path given", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
             else if (string.IsNullOrWhiteSpace(textBoxFastDLpath.Text)) // Check if fastdl textbox has text
             {
                 MessageBox.Show("Server path: GIVEN\nFastDL path: NOT GIVEN\n\nNo path to FastDL was given.", "No FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
 
             bool srcdsExists = false; // Assume false
@@ -137,14 +138,16 @@ namespace QuickFastDLUpdater
             if (!srcdsExists)
             {
                 MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
 
             if (!Directory.Exists(textBoxFastDLpath.Text))
             {
                 MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path does not exist.", "FastDL path does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
+
+            return true;
         }
     }
 }
