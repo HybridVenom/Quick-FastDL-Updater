@@ -1,6 +1,10 @@
 # Quick FastDL Updater
 Quick and automatic FastDL updater. This application will compress maps (filtered by prefix) from your dedicated CS:GO server to given FastDL path.
 
+## Releases
+### v0.5-beta
+[Download](https://github.com/HybridVenom/Quick-FastDL-Updater/releases/tag/v0.5-beta)
+
 ## Preview
 30s v0.5-beta preview
 ![v0.5-beta Preview](https://i.imgur.com/q3sE4MN.gif)
