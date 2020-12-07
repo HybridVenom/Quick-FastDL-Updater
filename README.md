@@ -6,7 +6,7 @@ Quick and automatic FastDL updater. This application will compress maps (filtere
 [Download](https://github.com/HybridVenom/Quick-FastDL-Updater/releases/tag/v0.5-beta)
 
 ## Preview
-30s v0.5-beta preview
+A30 second preview of [v0.5-beta](https://github.com/HybridVenom/Quick-FastDL-Updater/releases/tag/v0.5-beta)
 ![v0.5-beta Preview](https://i.imgur.com/q3sE4MN.gif)
 
 ## Todo and bugs 🐛
