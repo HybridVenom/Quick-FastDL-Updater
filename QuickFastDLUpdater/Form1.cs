@@ -128,26 +128,6 @@ namespace QuickFastDLUpdater
                     ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", labelStatusText, this);
                 });
                 execThread.Start();
-
-                foreach (FileInfo file in filesArr) // file: the file that is going to be compressed
-                {
-                    FileInfo compressedFile = new FileInfo(textBoxFastDLpath.Text + @"\maps\" + file.Name + ".bz2"); // compressedFile: Output, compressed file
-                    using (FileStream fileStream = file.OpenRead())
-                    {
-                        using (FileStream compressedFileStream = compressedFile.Create())
-                        {
-                            try
-                            {
-                                BZip2.Compress(fileStream, compressedFileStream, true, 4096);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-                    }
-                }
             }
             else if (prefixArr != null) // Compress .bsp files matching prefix
             {
