@@ -29,6 +29,7 @@ namespace QuickFastDLUpdater
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.labelStatusText = new System.Windows.Forms.Label();
             this.labelFastDLPath = new System.Windows.Forms.Label();
@@ -44,6 +45,11 @@ namespace QuickFastDLUpdater
             this.textBoxPrefix = new System.Windows.Forms.TextBox();
             this.labelPrefix = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.toolTipServerPath = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipFastDLPath = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipPrefix = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipPrecheck = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipStart = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // labelStatusText
@@ -106,6 +112,7 @@ namespace QuickFastDLUpdater
             this.textBoxServerpath.Name = "textBoxServerpath";
             this.textBoxServerpath.Size = new System.Drawing.Size(281, 20);
             this.textBoxServerpath.TabIndex = 0;
+            this.toolTipServerPath.SetToolTip(this.textBoxServerpath, "Enter the path to your dedicate CS:GO server (same folder as \'srcds.exe\').");
             // 
             // textBoxFastDLpath
             // 
@@ -177,6 +184,31 @@ namespace QuickFastDLUpdater
             this.progressBar1.Size = new System.Drawing.Size(360, 23);
             this.progressBar1.TabIndex = 16;
             // 
+            // toolTipServerPath
+            // 
+            this.toolTipServerPath.ToolTipTitle = "CS:GO Server path";
+            this.toolTipServerPath.SetToolTip(textBoxServerpath, "Enter the path to your dedicated CS:GO server (same folder as 'srcds.exe').");
+            // 
+            // toolTipFastDLPath
+            // 
+            this.toolTipFastDLPath.ToolTipTitle = "FastDL path";
+            this.toolTipServerPath.SetToolTip(textBoxFastDLpath, "Enter the path to your FastDL folder.");
+            // 
+            // toolTipPrefix
+            // 
+            this.toolTipPrefix.ToolTipTitle = "Map prefix(es)";
+            this.toolTipServerPath.SetToolTip(textBoxPrefix, "Filter maps by their prefix(es).\nEx. one: \"de\"\nEx. multiple: \"bhop/kz\".");
+            // 
+            // toolTipPrecheck
+            // 
+            this.toolTipPrecheck.ToolTipTitle = "Pre-check";
+            this.toolTipServerPath.SetToolTip(btnPreCheck, "Validate your paths and see how many maps were found (with or without a filter).");
+            // 
+            // toolTipStart
+            // 
+            this.toolTipStart.ToolTipTitle = "Start";
+            this.toolTipServerPath.SetToolTip(btnStart, "Starts compressing the maps and adds them to given FastDL path.");
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -220,6 +252,11 @@ namespace QuickFastDLUpdater
         private System.Windows.Forms.TextBox textBoxPrefix;
         private System.Windows.Forms.Label labelPrefix;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ToolTip toolTipServerPath;
+        private System.Windows.Forms.ToolTip toolTipFastDLPath;
+        private System.Windows.Forms.ToolTip toolTipPrefix;
+        private System.Windows.Forms.ToolTip toolTipPrecheck;
+        private System.Windows.Forms.ToolTip toolTipStart;
     }
 }
 
