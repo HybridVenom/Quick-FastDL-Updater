@@ -61,9 +61,9 @@ namespace QuickFastDLUpdater
             this.labelFastDLPath.AutoSize = true;
             this.labelFastDLPath.Location = new System.Drawing.Point(9, 62);
             this.labelFastDLPath.Name = "labelFastDLPath";
-            this.labelFastDLPath.Size = new System.Drawing.Size(65, 13);
+            this.labelFastDLPath.Size = new System.Drawing.Size(132, 13);
             this.labelFastDLPath.TabIndex = 1;
-            this.labelFastDLPath.Text = "FastDL path";
+            this.labelFastDLPath.Text = "FastDL path / Output path";
             // 
             // labelCSGOPath
             // 
