@@ -106,7 +106,6 @@ namespace QuickFastDLUpdater
             this.textBoxServerpath.Name = "textBoxServerpath";
             this.textBoxServerpath.Size = new System.Drawing.Size(281, 20);
             this.textBoxServerpath.TabIndex = 0;
-            this.textBoxServerpath.Text = "D:\\Program Files (x86)\\CSGO Server";
             // 
             // textBoxFastDLpath
             // 
@@ -114,7 +113,6 @@ namespace QuickFastDLUpdater
             this.textBoxFastDLpath.Name = "textBoxFastDLpath";
             this.textBoxFastDLpath.Size = new System.Drawing.Size(281, 20);
             this.textBoxFastDLpath.TabIndex = 2;
-            this.textBoxFastDLpath.Text = "C:\\Users\\alexa\\Desktop\\XD";
             // 
             // btnBrowseServer
             // 
