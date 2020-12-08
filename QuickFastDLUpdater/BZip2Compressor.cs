@@ -5,6 +5,7 @@ using ICSharpCode.SharpZipLib.BZip2;
 
 public static class BZip2Compressor
 {
+    #region Stackoverflow author: Thunder (/users/232687/thunder)
     delegate void setStatusTextCallback(Form f, Control ctrl, string text);
     /// <summary>
     /// Set the text property of given control.
@@ -25,6 +26,7 @@ public static class BZip2Compressor
         else
             ctrl.Text = text;
     }
+    #endregion
 
     /// <summary>
     /// Compress (based on compression level) all files in given file array to output path.
@@ -32,15 +34,13 @@ public static class BZip2Compressor
     /// <param name="fileArray">Array of files that will be compressed.</param>
     /// <param name="outputPath">Output path for compressed files.</param>
     /// <param name="compressionLevel">Level of compression (ranging from 1-9).</param>
-    public static void Compress(FileInfo[] fileArray, string outputPath, int compressionLevel)
+    public static void CompressFiles(FileInfo[] fileArray, string outputPath, int compressionLevel)
     {
         foreach (FileInfo file in fileArray) // file: the file that is going to be compressed
         {
             FileInfo compressedFile = new FileInfo(outputPath + file.Name + ".bz2"); // compressedFile: Output, compressed file
             using (FileStream fileStream = file.OpenRead())
-            {
                 using (FileStream compressedFileStream = compressedFile.Create())
-                {
                     try
                     {
                         BZip2.Compress(fileStream, compressedFileStream, true, compressionLevel);
@@ -50,41 +50,7 @@ public static class BZip2Compressor
                         MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                }
-            }
         }
-    }
-
-    /// <summary>
-    /// Compress (based on compression level) files in given file array that match with any given prefix to output path. Updates given label through referenced form.
-    /// </summary>
-    /// <param name="fileArray">Array of files that will be compressed.</param>
-    /// <param name="outputPath">Output path for compressed files.</param>
-    /// <param name="compressionLevel">Level of compression (ranging from 1-9).</param>
-    /// <param name="prefixArray">Array of prefixes, matching files will be compressed.</param>
-    public static void Compress(FileInfo[] fileArray, string outputPath, int compressionLevel, string[] prefixArray)
-    {
-        foreach (FileInfo file in fileArray) // file: the file that is going to be compressed
-            for (int i = 0; i < prefixArray.Length; i++) // Check if current
-                if (file.Name.StartsWith(prefixArray[i]))
-                {
-                    FileInfo compressedFile = new FileInfo(outputPath + file.Name + ".bz2"); // compressedFile: Output, compressed file
-                    using (FileStream fileStream = file.OpenRead())
-                    {
-                        using (FileStream compressedFileStream = compressedFile.Create())
-                        {
-                            try
-                            {
-                                BZip2.Compress(fileStream, compressedFileStream, true, compressionLevel);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-                    }
-                }
     }
 
     /// <summary>
@@ -95,16 +61,14 @@ public static class BZip2Compressor
     /// <param name="compressionLevel">Level of compression (ranging from 1-9).</param>
     /// <param name="statusLabel">Reference to status label.</param>
     /// <param name="form">Reference to the form where statusLabel is located.</param>
-    public static void Compress(FileInfo[] fileArray, string outputPath, int compressionLevel, Label statusLabel, Form form)
+    public static void CompressFiles(FileInfo[] fileArray, string outputPath, int compressionLevel, Label statusLabel, Form form)
     {
         foreach (FileInfo file in fileArray) // file: the file that is going to be compressed
         {
             setStatusText(form, statusLabel, "Compressing " + file.Name + "...");
             FileInfo compressedFile = new FileInfo(outputPath + file.Name + ".bz2"); // compressedFile: Output, compressed file
             using (FileStream fileStream = file.OpenRead())
-            {
                 using (FileStream compressedFileStream = compressedFile.Create())
-                {
                     try
                     {
                         BZip2.Compress(fileStream, compressedFileStream, true, compressionLevel);
@@ -114,45 +78,7 @@ public static class BZip2Compressor
                         MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                }
-            }
         }
-        setStatusText(form, statusLabel, "Ready");
-    }
-
-    /// <summary>
-    /// Compress (based on compression level) files in given file array that match with any given prefix to output path. Updates given label through referenced form.
-    /// </summary>
-    /// <param name="fileArray">Array of files that will be compressed.</param>
-    /// <param name="outputPath">Output path for compressed files.</param>
-    /// <param name="compressionLevel">Level of compression (ranging from 1-9).</param>
-    /// <param name="prefixArray">Array of prefixes, matching files will be compressed.</param>
-    /// <param name="statusLabel">Reference to status label.</param>
-    /// <param name="form">Reference to the form where statusLabel is located.</param>
-    public static void Compress(FileInfo[] fileArray, string outputPath, int compressionLevel, string[] prefixArray, Label statusLabel, Form form)
-    {
-        foreach (FileInfo file in fileArray) // file: the file that is going to be compressed
-            for (int i = 0; i < prefixArray.Length; i++) // Check if current
-                if (file.Name.StartsWith(prefixArray[i]))
-                {
-                    setStatusText(form, statusLabel, "Compressing " + file.Name + "...");
-                    FileInfo compressedFile = new FileInfo(outputPath + file.Name + ".bz2"); // compressedFile: Output, compressed file
-                    using (FileStream fileStream = file.OpenRead())
-                    {
-                        using (FileStream compressedFileStream = compressedFile.Create())
-                        {
-                            try
-                            {
-                                BZip2.Compress(fileStream, compressedFileStream, true, compressionLevel);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-                    }
-                }
         setStatusText(form, statusLabel, "Ready");
     }
 }

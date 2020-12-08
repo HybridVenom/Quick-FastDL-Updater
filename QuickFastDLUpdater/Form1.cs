@@ -60,7 +60,7 @@ namespace QuickFastDLUpdater
 
         private void btnPreCheck_Click(object sender, EventArgs e)
         {
-            if (!sanitycheck())
+            if (!Sanitycheck())
                 return;
 
             string fullMapPrefix = textBoxPrefix.Text;
@@ -106,11 +106,11 @@ namespace QuickFastDLUpdater
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            setStatusText("Starting...");
-            if (!sanitycheck())
+            SetStatusText("Starting...");
+            if (!Sanitycheck())
                 return;
 
-            setStatusText("Reading prefix(es)...");
+            SetStatusText("Reading prefix(es)...");
             string fullMapPrefix = textBoxPrefix.Text;
             string[] prefixArr = null;
             if (string.IsNullOrWhiteSpace(textBoxPrefix.Text))
@@ -126,24 +126,27 @@ namespace QuickFastDLUpdater
             if (fullMapPrefix != null)
                 prefixArr = fullMapPrefix.Split('/');
 
-            setStatusText("Getting .bsp files from /csgo/maps ...");
+            SetStatusText("Getting .bsp files from /csgo/maps ...");
             DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
-            FileInfo[] filesArr = di.GetFiles("*.bsp");
 
             int compressionLevel = trackBarCompressionLevel.Value;
             if (fullMapPrefix == null) // Compress all .bsp files
             {
+                FileInfo[] filesArr = di.GetFiles("*.bsp");
+
                 Thread execThread = new Thread(delegate ()
                 {
-                    BZip2Compressor.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, this);
+                    BZip2Compressor.CompressFiles(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, this);
                 });
                 execThread.Start();
             }
             else if (prefixArr != null) // Compress .bsp files matching prefix
             {
+                FileInfo[] matchingFiles = GetMatchingFiles(di, prefixArr);
+
                 Thread execThread = new Thread(delegate ()
                 {
-                    BZip2Compressor.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, prefixArr, labelStatusText, this);
+                    BZip2Compressor.CompressFiles(matchingFiles, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, this);
                 });
                 execThread.Start();
             }
@@ -160,19 +163,43 @@ namespace QuickFastDLUpdater
         }
 
         // Funcs
-        private bool sanitycheck()
+        /// <summary>
+        /// Fetch an array of files matching given prefix(es).
+        /// </summary>
+        /// <param name="dirInfo">Given directory of files.</param>
+        /// <param name="prefixes">Array of prefix that will be matched against files in given directory.</param>
+        /// <returns></returns>
+        private FileInfo[] GetMatchingFiles(DirectoryInfo dirInfo , string[] prefixes)
         {
-            setStatusText("Sanity check started...");
+            List<FileInfo> matchingFilesList = new List<FileInfo>();
+            FileInfo[] dirFiles = dirInfo.GetFiles("*.bsp");
+
+            foreach (FileInfo file in dirFiles)
+                for (int i = 0; i < prefixes.Length; i++)
+                    if (file.Name.StartsWith(prefixes[i]))
+                        matchingFilesList.Add(file);
+
+            return matchingFilesList.ToArray();
+        }
+
+        private void SetStatusText(string text)
+        {
+            labelStatusText.Text = text;
+        }
+
+        private bool Sanitycheck()
+        {
+            SetStatusText("Sanity check started...");
             if (string.IsNullOrWhiteSpace(textBoxServerpath.Text)) // Check if server textbox has text
             {
                 MessageBox.Show("Server path: GIVEN\n\nNo server path was given.", "No server path given", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                setStatusText("Sanity check: FAILED");
+                SetStatusText("Sanity check: FAILED");
                 return false;
             }
             else if (string.IsNullOrWhiteSpace(textBoxFastDLpath.Text)) // Check if fastdl textbox has text
             {
                 MessageBox.Show("Server path: GIVEN\nFastDL path: NOT GIVEN\n\nNo path to FastDL was given.", "No FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                setStatusText("Sanity check: FAILED");
+                SetStatusText("Sanity check: FAILED");
                 return false;
             }
 
@@ -189,33 +216,26 @@ namespace QuickFastDLUpdater
             if (!srcdsExists)
             {
                 MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                setStatusText("Sanity check: FAILED");
+                SetStatusText("Sanity check: FAILED");
                 return false;
             }
 
             if (!Directory.Exists(textBoxFastDLpath.Text))
             {
                 MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path does not exist.", "FastDL path does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                setStatusText("Sanity check: FAILED");
+                SetStatusText("Sanity check: FAILED");
                 return false;
             }
 
             if (!Directory.Exists(textBoxFastDLpath.Text + @"\maps"))
             {
                 MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path is missing a \"maps\" folder.", "FastDL path missing \"maps\" folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                setStatusText("Sanity check: FAILED");
+                SetStatusText("Sanity check: FAILED");
                 return false;
             }
 
-            setStatusText("Sanity check: OK. Ready");
+            SetStatusText("Sanity check: OK. Ready");
             return true;
         }
-
-        private void setStatusText(string text)
-        {
-            labelStatusText.Text = text;
-        }
-
-
     }
 }
