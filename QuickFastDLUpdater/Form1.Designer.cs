@@ -193,6 +193,7 @@ namespace QuickFastDLUpdater
             this.progressBar.Location = new System.Drawing.Point(12, 403);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(360, 23);
+            this.progressBar.Step = 2;
             this.progressBar.TabIndex = 16;
             // 
             // toolTipServerPath

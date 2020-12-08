@@ -107,6 +107,7 @@ namespace QuickFastDLUpdater
         private void btnStart_Click(object sender, EventArgs e)
         {
             SetStatusText("Starting...");
+            progressBar.Value = 0;
             if (!Sanitycheck())
                 return;
 
@@ -133,20 +134,22 @@ namespace QuickFastDLUpdater
             if (fullMapPrefix == null) // Compress all .bsp files
             {
                 FileInfo[] filesArr = di.GetFiles("*.bsp");
+                progressBar.Maximum = filesArr.Length * progressBar.Step;
 
                 Thread execThread = new Thread(delegate ()
                 {
-                    BZip2Compressor.CompressFiles(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, this);
+                    BZip2Compressor.CompressFiles(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, progressBar, this);
                 });
                 execThread.Start();
             }
             else if (prefixArr != null) // Compress .bsp files matching prefix
             {
                 FileInfo[] matchingFiles = GetMatchingFiles(di, prefixArr);
+                progressBar.Maximum = matchingFiles.Length * progressBar.Step;
 
                 Thread execThread = new Thread(delegate ()
                 {
-                    BZip2Compressor.CompressFiles(matchingFiles, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, this);
+                    BZip2Compressor.CompressFiles(matchingFiles, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, progressBar, this);
                 });
                 execThread.Start();
             }
@@ -169,7 +172,7 @@ namespace QuickFastDLUpdater
         /// <param name="dirInfo">Given directory of files.</param>
         /// <param name="prefixes">Array of prefix that will be matched against files in given directory.</param>
         /// <returns></returns>
-        private FileInfo[] GetMatchingFiles(DirectoryInfo dirInfo , string[] prefixes)
+        private FileInfo[] GetMatchingFiles(DirectoryInfo dirInfo, string[] prefixes)
         {
             List<FileInfo> matchingFilesList = new List<FileInfo>();
             FileInfo[] dirFiles = dirInfo.GetFiles("*.bsp");
