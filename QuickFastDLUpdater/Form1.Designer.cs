@@ -270,8 +270,11 @@ namespace QuickFastDLUpdater
             this.Controls.Add(this.labelCSGOPath);
             this.Controls.Add(this.labelFastDLPath);
             this.Controls.Add(this.labelStatusText);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quick FastDL Updater";
             ((System.ComponentModel.ISupportInitialize)(this.trackBarCompressionLevel)).EndInit();
             this.ResumeLayout(false);

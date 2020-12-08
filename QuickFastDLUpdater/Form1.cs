@@ -81,7 +81,6 @@ namespace QuickFastDLUpdater
             DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
             FileInfo[] filesArr = di.GetFiles("*.bsp");
 
-            // .\csgo\maps
             int mapCount = 0;
 
             if (fullMapPrefix == null)
