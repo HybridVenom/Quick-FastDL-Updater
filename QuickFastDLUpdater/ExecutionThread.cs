@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.BZip2;
 
@@ -8,10 +7,10 @@ public static class ExecutionThread
 {
     delegate void setStatusTextCallback(Form f, Control ctrl, string text);
     /// <summary>
-    /// Set the text property of given control
+    /// Set the text property of given control.
     /// </summary>
     /// <param name="f">The calling form</param>
-    /// <param name="ctrl"></param>
+    /// <param name="ctrl">Reference to given control/item in the calling form.</param>
     /// <param name="text"></param>
     public static void setStatusText(Form form, Control ctrl, string text)
     {
@@ -156,6 +155,4 @@ public static class ExecutionThread
                 }
         setStatusText(form, statusLabel, "Ready");
     }
-
-
 }
