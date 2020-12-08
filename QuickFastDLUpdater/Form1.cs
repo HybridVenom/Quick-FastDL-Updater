@@ -22,7 +22,6 @@ namespace QuickFastDLUpdater
             InitializeComponent();
         }
 
-        // _Click
         private void btnBrowseServer_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -132,21 +131,19 @@ namespace QuickFastDLUpdater
             FileInfo[] filesArr = di.GetFiles("*.bsp");
 
             int compressionLevel = trackBarCompressionLevel.Value;
-
             if (fullMapPrefix == null) // Compress all .bsp files
             {
                 Thread execThread = new Thread(delegate ()
                 {
-                    ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, this);
+                    BZip2Compressor.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, this);
                 });
                 execThread.Start();
             }
             else if (prefixArr != null) // Compress .bsp files matching prefix
             {
-
                 Thread execThread = new Thread(delegate ()
                 {
-                    ExecutionThread.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, prefixArr, labelStatusText, this);
+                    BZip2Compressor.Compress(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, prefixArr, labelStatusText, this);
                 });
                 execThread.Start();
             }
@@ -179,7 +176,7 @@ namespace QuickFastDLUpdater
                 return false;
             }
 
-            bool srcdsExists = false; // Assume false
+            bool srcdsExists = false; // Assume false/wrong directory
             FileInfo[] serverFiles = new DirectoryInfo(textBoxServerpath.Text).GetFiles();
 
             foreach (FileInfo file in serverFiles)

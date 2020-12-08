@@ -44,7 +44,7 @@ namespace QuickFastDLUpdater
             this.btnStart = new System.Windows.Forms.Button();
             this.textBoxPrefix = new System.Windows.Forms.TextBox();
             this.labelPrefix = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.toolTipServerPath = new System.Windows.Forms.ToolTip(this.components);
             this.toolTipFastDLPath = new System.Windows.Forms.ToolTip(this.components);
             this.toolTipPrefix = new System.Windows.Forms.ToolTip(this.components);
@@ -187,12 +187,13 @@ namespace QuickFastDLUpdater
             this.labelPrefix.TabIndex = 15;
             this.labelPrefix.Text = "Map prefix(es)";
             // 
-            // progressBar1
+            // progressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 403);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(360, 23);
-            this.progressBar1.TabIndex = 16;
+            this.progressBar.Cursor = System.Windows.Forms.Cursors.Default;
+            this.progressBar.Location = new System.Drawing.Point(12, 403);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(360, 23);
+            this.progressBar.TabIndex = 16;
             // 
             // toolTipServerPath
             // 
@@ -256,7 +257,7 @@ namespace QuickFastDLUpdater
             this.Controls.Add(this.labelCompressionWarning);
             this.Controls.Add(this.labelCompressionLevel);
             this.Controls.Add(this.trackBarCompressionLevel);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.labelPrefix);
             this.Controls.Add(this.textBoxPrefix);
             this.Controls.Add(this.btnStart);
@@ -294,7 +295,7 @@ namespace QuickFastDLUpdater
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.TextBox textBoxPrefix;
         private System.Windows.Forms.Label labelPrefix;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.ToolTip toolTipServerPath;
         private System.Windows.Forms.ToolTip toolTipFastDLPath;
         private System.Windows.Forms.ToolTip toolTipPrefix;

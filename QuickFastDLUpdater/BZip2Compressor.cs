@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.BZip2;
 
-public static class ExecutionThread
+public static class BZip2Compressor
 {
     delegate void setStatusTextCallback(Form f, Control ctrl, string text);
     /// <summary>
