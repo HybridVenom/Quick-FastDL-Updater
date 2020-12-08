@@ -18,7 +18,6 @@ A 40 second preview of [v0.6-beta](https://github.com/HybridVenom/Quick-FastDL-U
 - [x] Status text: Make the status text show what it is currently doing
 - [ ] Status image: "Loading" gif
 - [x] Progress bar: Get it working
-- [ ] Application window: Make application window scale items correctly
 - [x] Compression level: Add different levels of compression
 - [ ] Help button: Add a help button :)
 - [ ] Skip existing: Add an option to skip re-compressing already existing files in the FastDL directory.
