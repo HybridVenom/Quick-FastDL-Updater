@@ -15,7 +15,7 @@ A 30 second preview of [v0.5-beta](https://github.com/HybridVenom/Quick-FastDL-U
 - [x] Start: Run compression on second thread
 - [x] Status text: Make the status text show what it is currently doing
 - [ ] Status image: "Loading" gif
-- [ ] Progress bar: Get it working
+- [x] Progress bar: Get it working
 - [ ] Application window: Make application window scale items correctly
 - [x] Compression level: Add different levels of compression
 - [ ] Help button: Add a help button :)
