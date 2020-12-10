@@ -24,7 +24,7 @@ A 40 second preview of [v0.6-beta](https://github.com/HybridVenom/Quick-FastDL-U
 - [ ] .nav-files: Option to compress and add .nav-files to given FastDL directory.
 
 ### Known bugs 🐛
-- [ ] Map prefix(es): `bhop/ar/cs/` -> Expected: filter by "bhop", "ar" and "cs". Result: 4th entry is empty, makes it count ALL files (inc. folders)
+- None.
 
 ## Explanation of fields
 - CS:GO Server path: The full path to the root of your dedicated CS:GO server ("root" is the folder that contains "srcds.exe")
