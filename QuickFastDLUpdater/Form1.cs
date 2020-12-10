@@ -139,6 +139,7 @@ namespace QuickFastDLUpdater
                 {
                     BZip2Compressor.CompressFiles(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, progressBar, this);
                 });
+                execThread.IsBackground = true;
                 execThread.Start();
             }
             else if (prefixArr != null) // Compress .bsp files matching prefix
@@ -150,6 +151,7 @@ namespace QuickFastDLUpdater
                 {
                     BZip2Compressor.CompressFiles(matchingFiles, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, progressBar, this);
                 });
+                execThread.IsBackground = true;
                 execThread.Start();
             }
         }
