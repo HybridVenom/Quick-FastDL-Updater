@@ -201,7 +201,6 @@ namespace QuickFastDLUpdater
             this.buttonAddPrefix.Size = new System.Drawing.Size(75, 20);
             this.buttonAddPrefix.TabIndex = 107;
             this.buttonAddPrefix.Text = "Add";
-            this.toolTipServerPath.SetToolTip(this.buttonAddPrefix, "Starts compressing the maps and adds them to given FastDL path.");
             this.buttonAddPrefix.UseVisualStyleBackColor = true;
             this.buttonAddPrefix.Click += new System.EventHandler(this.buttonAddPrefix_Click);
             // 
@@ -212,7 +211,6 @@ namespace QuickFastDLUpdater
             this.buttonClearPrefixes.Size = new System.Drawing.Size(75, 20);
             this.buttonClearPrefixes.TabIndex = 108;
             this.buttonClearPrefixes.Text = "Clear";
-            this.toolTipServerPath.SetToolTip(this.buttonClearPrefixes, "Starts compressing the maps and adds them to given FastDL path.");
             this.buttonClearPrefixes.UseVisualStyleBackColor = true;
             this.buttonClearPrefixes.Click += new System.EventHandler(this.buttonClearPrefixes_Click);
             // 
