@@ -63,44 +63,26 @@ namespace QuickFastDLUpdater
             if (!Sanitycheck())
                 return;
 
-            string fullMapPrefix = textBoxPrefix.Text;
-            string[] prefixArr = null;
-            if (string.IsNullOrWhiteSpace(textBoxPrefix.Text))
-            {
-                DialogResult result = MessageBox.Show("No map prefix was given (all maps will be counted.)\n\nWould you like to cancel and add a map prefix?", "No map prefix given", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes || result == DialogResult.Cancel)
-                    return;
-                else
-                    fullMapPrefix = null;
-            }
-
-            if (fullMapPrefix != null)
-                prefixArr = fullMapPrefix.Split('/');
+            string[] prefixArr = GetPrefixArray();
 
             DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
             FileInfo[] filesArr = di.GetFiles("*.bsp");
 
             int mapCount = 0;
 
-            if (fullMapPrefix == null)
+            if (prefixArr.Length < 1)
                 mapCount = filesArr.Length;
-            else if (prefixArr != null)
+            else
                 foreach (FileInfo file in filesArr)
                     for (int i = 0; i < prefixArr.Length; i++)
                         if (file.Name.StartsWith(prefixArr[i]))
                             mapCount++;
 
-            if (fullMapPrefix == null)
-                MessageBox.Show("Server path: OK\nFastDL path: VALID\n\nMap count (*.bsp): " + mapCount, "Pre-check scan complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            else
-            {
-                string msg = "Server path: OK\nFastDL path: VALID\n\nMap count (*.bsp): " + mapCount + "\nPrefix(es): ";
-                foreach (string prefix in prefixArr)
-                    msg += prefix + ", ";
+            string msg = "Server path: OK\nFastDL path: VALID\n\nMap count (*.bsp): " + mapCount + "\nPrefix(es): ";
+            foreach (string prefix in prefixArr)
+                msg += prefix + ", ";
 
-                MessageBox.Show(msg, "Pre-check scan complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            MessageBox.Show(msg, "Pre-check scan complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -166,7 +148,25 @@ namespace QuickFastDLUpdater
             Process.Start(@"https://github.com/HybridVenom");
         }
 
+        private void buttonAddPrefix_Click(object sender, EventArgs e)
+        {
+            string prefix = textBoxPrefix.Text.Trim().ToLower().Replace(" ", "");
+
+            if (prefix.Length < 1)
+                MessageBox.Show("You cannot add a blank entry to the prefix list!", "No map prefix given", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                listViewPrefix.Items.Add(new ListViewItem(prefix));
+
+            textBoxPrefix.Text = "";
+        }
+
+        private void buttonClearPrefixes_Click(object sender, EventArgs e)
+        {
+            listViewPrefix.Clear();
+        }
+
         // Funcs
+
         /// <summary>
         /// Fetch an array of files matching given prefix(es).
         /// </summary>
@@ -189,6 +189,11 @@ namespace QuickFastDLUpdater
         private void SetStatusText(string text)
         {
             labelStatusText.Text = text;
+        }
+
+        private string[] GetPrefixArray()
+        {
+            return listViewPrefix.Items.Cast<ListViewItem>().Select(item => item.Text).ToList().ToArray<string>();
         }
 
         private bool Sanitycheck()
