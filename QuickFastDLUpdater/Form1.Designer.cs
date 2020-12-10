@@ -56,6 +56,8 @@ namespace QuickFastDLUpdater
             this.labelCompressionWarning = new System.Windows.Forms.Label();
             this.listViewPrefix = new System.Windows.Forms.ListView();
             this.labelPrefixes = new System.Windows.Forms.Label();
+            this.checkBoxIncNav = new System.Windows.Forms.CheckBox();
+            this.checkBoxSkipExisting = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarCompressionLevel)).BeginInit();
             this.SuspendLayout();
             // 
@@ -287,11 +289,35 @@ namespace QuickFastDLUpdater
             this.labelPrefixes.TabIndex = 106;
             this.labelPrefixes.Text = "Map prefix(es)";
             // 
+            // checkBoxIncNav
+            // 
+            this.checkBoxIncNav.AutoSize = true;
+            this.checkBoxIncNav.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxIncNav.Location = new System.Drawing.Point(236, 309);
+            this.checkBoxIncNav.Name = "checkBoxIncNav";
+            this.checkBoxIncNav.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxIncNav.TabIndex = 109;
+            this.checkBoxIncNav.Text = "(WIP) Include .nav-files";
+            this.checkBoxIncNav.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSkipExisting
+            // 
+            this.checkBoxSkipExisting.AutoSize = true;
+            this.checkBoxSkipExisting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxSkipExisting.Location = new System.Drawing.Point(257, 286);
+            this.checkBoxSkipExisting.Name = "checkBoxSkipExisting";
+            this.checkBoxSkipExisting.Size = new System.Drawing.Size(115, 17);
+            this.checkBoxSkipExisting.TabIndex = 110;
+            this.checkBoxSkipExisting.Text = "(WIP) Skip existing";
+            this.checkBoxSkipExisting.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 450);
+            this.Controls.Add(this.checkBoxSkipExisting);
+            this.Controls.Add(this.checkBoxIncNav);
             this.Controls.Add(this.buttonClearPrefixes);
             this.Controls.Add(this.buttonAddPrefix);
             this.Controls.Add(this.labelPrefixes);
@@ -351,6 +377,8 @@ namespace QuickFastDLUpdater
         private System.Windows.Forms.Label labelPrefixes;
         private System.Windows.Forms.Button buttonAddPrefix;
         private System.Windows.Forms.Button buttonClearPrefixes;
+        private System.Windows.Forms.CheckBox checkBoxIncNav;
+        private System.Windows.Forms.CheckBox checkBoxSkipExisting;
     }
 }
 
