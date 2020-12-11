@@ -93,26 +93,21 @@ namespace QuickFastDLUpdater
                 return;
 
             SetStatusText("Reading prefix(es)...");
-            string fullMapPrefix = textBoxPrefix.Text;
-            string[] prefixArr = null;
-            if (string.IsNullOrWhiteSpace(textBoxPrefix.Text))
+            string[] prefixArr = GetPrefixArray();
+
+            if (prefixArr.Length < 1)
             {
                 DialogResult result = MessageBox.Show("No map prefix was given (all maps will be counted.)\n\nWould you like to cancel and add a map prefix?", "No map prefix given", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes || result == DialogResult.Cancel)
                     return;
-                else
-                    fullMapPrefix = null;
             }
-
-            if (fullMapPrefix != null)
-                prefixArr = fullMapPrefix.Split('/');
 
             SetStatusText("Getting .bsp files from /csgo/maps ...");
             DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
 
             int compressionLevel = trackBarCompressionLevel.Value;
-            if (fullMapPrefix == null) // Compress all .bsp files
+            if (prefixArr.Length < 1) // Compress all .bsp files
             {
                 FileInfo[] filesArr = di.GetFiles("*.bsp");
                 progressBar.Maximum = filesArr.Length * progressBar.Step;
@@ -124,7 +119,7 @@ namespace QuickFastDLUpdater
                 execThread.IsBackground = true;
                 execThread.Start();
             }
-            else if (prefixArr != null) // Compress .bsp files matching prefix
+            else // Compress .bsp files matching prefix
             {
                 FileInfo[] matchingFiles = GetMatchingFiles(di, prefixArr);
                 progressBar.Maximum = matchingFiles.Length * progressBar.Step;
