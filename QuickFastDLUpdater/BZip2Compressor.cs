@@ -98,6 +98,6 @@ public static class BZip2Compressor
                 }
         }
         if (statusLabel != null)
-            SetStatusText(form, statusLabel, "Ready");
+            SetStatusText(form, statusLabel, "Done!");
     }
 }

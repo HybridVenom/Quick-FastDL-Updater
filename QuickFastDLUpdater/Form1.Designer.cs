@@ -58,15 +58,17 @@ namespace QuickFastDLUpdater
             this.labelPrefixes = new System.Windows.Forms.Label();
             this.checkBoxIncNav = new System.Windows.Forms.CheckBox();
             this.checkBoxSkipExisting = new System.Windows.Forms.CheckBox();
+            this.progressBarNav = new System.Windows.Forms.ProgressBar();
+            this.labelStatusNavText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarCompressionLevel)).BeginInit();
             this.SuspendLayout();
             // 
             // labelStatusText
             // 
             this.labelStatusText.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.labelStatusText.Location = new System.Drawing.Point(0, 429);
+            this.labelStatusText.Location = new System.Drawing.Point(0, 477);
             this.labelStatusText.Name = "labelStatusText";
-            this.labelStatusText.Size = new System.Drawing.Size(384, 21);
+            this.labelStatusText.Size = new System.Drawing.Size(384, 17);
             this.labelStatusText.TabIndex = 0;
             this.labelStatusText.Text = "Ready";
             this.labelStatusText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -186,7 +188,7 @@ namespace QuickFastDLUpdater
             // progressBar
             // 
             this.progressBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.progressBar.Location = new System.Drawing.Point(12, 403);
+            this.progressBar.Location = new System.Drawing.Point(12, 451);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(360, 23);
             this.progressBar.Step = 2;
@@ -293,11 +295,13 @@ namespace QuickFastDLUpdater
             // 
             this.checkBoxIncNav.AutoSize = true;
             this.checkBoxIncNav.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxIncNav.Location = new System.Drawing.Point(236, 309);
+            this.checkBoxIncNav.Checked = true;
+            this.checkBoxIncNav.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxIncNav.Location = new System.Drawing.Point(266, 309);
             this.checkBoxIncNav.Name = "checkBoxIncNav";
-            this.checkBoxIncNav.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxIncNav.Size = new System.Drawing.Size(106, 17);
             this.checkBoxIncNav.TabIndex = 109;
-            this.checkBoxIncNav.Text = "(WIP) Include .nav-files";
+            this.checkBoxIncNav.Text = "Include .nav-files";
             this.checkBoxIncNav.UseVisualStyleBackColor = true;
             // 
             // checkBoxSkipExisting
@@ -311,11 +315,30 @@ namespace QuickFastDLUpdater
             this.checkBoxSkipExisting.Text = "(WIP) Skip existing";
             this.checkBoxSkipExisting.UseVisualStyleBackColor = true;
             // 
+            // progressBarNav
+            // 
+            this.progressBarNav.Cursor = System.Windows.Forms.Cursors.Default;
+            this.progressBarNav.Location = new System.Drawing.Point(12, 405);
+            this.progressBarNav.Name = "progressBarNav";
+            this.progressBarNav.Size = new System.Drawing.Size(360, 23);
+            this.progressBarNav.Step = 1;
+            this.progressBarNav.TabIndex = 111;
+            // 
+            // labelStatusNavText
+            // 
+            this.labelStatusNavText.Location = new System.Drawing.Point(0, 431);
+            this.labelStatusNavText.Name = "labelStatusNavText";
+            this.labelStatusNavText.Size = new System.Drawing.Size(384, 17);
+            this.labelStatusNavText.TabIndex = 112;
+            this.labelStatusNavText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 450);
+            this.ClientSize = new System.Drawing.Size(384, 494);
+            this.Controls.Add(this.labelStatusNavText);
+            this.Controls.Add(this.progressBarNav);
             this.Controls.Add(this.checkBoxSkipExisting);
             this.Controls.Add(this.checkBoxIncNav);
             this.Controls.Add(this.buttonClearPrefixes);
@@ -379,6 +402,8 @@ namespace QuickFastDLUpdater
         private System.Windows.Forms.Button buttonClearPrefixes;
         private System.Windows.Forms.CheckBox checkBoxIncNav;
         private System.Windows.Forms.CheckBox checkBoxSkipExisting;
+        private System.Windows.Forms.ProgressBar progressBarNav;
+        private System.Windows.Forms.Label labelStatusNavText;
     }
 }
 
