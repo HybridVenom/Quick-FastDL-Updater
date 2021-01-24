@@ -13,14 +13,14 @@ public static class BZip2Compressor
     /// <param name="f">The calling form</param>
     /// <param name="ctrl">Reference to given control/item in the calling form.</param>
     /// <param name="text"></param>
-    public static void SetStatusText(Form form, Control ctrl, string text)
+    public static void setStatusText(Form form, Control ctrl, string text)
     {
         // InvokeRequired required compares the thread ID of the 
         // calling thread to the thread ID of the creating thread. 
         // If these threads are different, it returns true. 
         if (ctrl.InvokeRequired)
         {
-            setStatusTextCallback d = new setStatusTextCallback(SetStatusText);
+            setStatusTextCallback d = new setStatusTextCallback(setStatusText);
             form.Invoke(d, new object[] { form, ctrl, text });
         }
         else
@@ -47,7 +47,7 @@ public static class BZip2Compressor
     /// <param name="fileArray">Array of files that will be compressed.</param>
     /// <param name="outputPath">Output path for compressed files.</param>
     /// <param name="compressionLevel">Level of compression (ranging from 1-9).</param>
-    public static void CompressFiles(FileInfo[] fileArray, string outputPath, int compressionLevel)
+    public static void compressFiles(FileInfo[] fileArray, string outputPath, int compressionLevel)
     {
         foreach (FileInfo file in fileArray) // file: the file that is going to be compressed
         {
@@ -75,12 +75,12 @@ public static class BZip2Compressor
     /// <param name="statusLabel">Reference to status label. Can be null.</param>
     /// <param name="progressBar">Reference to progress bar. Can be null.</param>
     /// <param name="form">Reference to the form where statusLabel is located.</param>
-    public static void CompressFiles(FileInfo[] fileArray, string outputPath, int compressionLevel, Label statusLabel, ProgressBar progressBar, Form form)
+    public static void compressFiles(FileInfo[] fileArray, string outputPath, int compressionLevel, Label statusLabel, ProgressBar progressBar, Form form)
     {
         foreach (FileInfo file in fileArray) // file: the file that is going to be compressed
         {
             if (statusLabel != null)
-                SetStatusText(form, statusLabel, "Compressing " + file.Name + "...");
+                setStatusText(form, statusLabel, "Compressing " + file.Name + "...");
             FileInfo compressedFile = new FileInfo(outputPath + file.Name + ".bz2"); // compressedFile: Output, compressed file
             using (FileStream fileStream = file.OpenRead())
             using (FileStream compressedFileStream = compressedFile.Create())
@@ -93,11 +93,11 @@ public static class BZip2Compressor
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Failed @ BZip2.Compress(...)", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    SetStatusText(form, statusLabel, "Failed on " + file.Name + "!");
+                    setStatusText(form, statusLabel, "Failed on " + file.Name + "!");
                     return;
                 }
         }
         if (statusLabel != null)
-            SetStatusText(form, statusLabel, "Done!");
+            setStatusText(form, statusLabel, "Done!");
     }
 }

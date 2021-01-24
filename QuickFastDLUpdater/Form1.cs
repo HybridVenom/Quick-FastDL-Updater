@@ -60,10 +60,10 @@ namespace QuickFastDLUpdater
 
         private void btnPreCheck_Click(object sender, EventArgs e)
         {
-            if (!Sanitycheck())
+            if (!sanitycheck())
                 return;
 
-            string[] prefixArr = GetPrefixArray();
+            string[] prefixArr = getPrefixArray();
 
             DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
             FileInfo[] filesArr = di.GetFiles("*.bsp");
@@ -87,14 +87,14 @@ namespace QuickFastDLUpdater
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            SetStatusText("Starting...");
+            setStatusText("Starting...");
             progressBar.Value = 0;
             progressBarNav.Value = 0;
-            if (!Sanitycheck())
+            if (!sanitycheck())
                 return;
 
-            SetStatusText("Reading prefix(es)...");
-            string[] prefixArr = GetPrefixArray();
+            setStatusText("Reading prefix(es)...");
+            string[] prefixArr = getPrefixArray();
 
             if (prefixArr.Length < 1)
             {
@@ -104,7 +104,7 @@ namespace QuickFastDLUpdater
                     return;
             }
 
-            SetStatusText("Getting .bsp files from /csgo/maps ...");
+            setStatusText("Getting .bsp files from /csgo/maps ...");
             DirectoryInfo di = new DirectoryInfo(textBoxServerpath.Text + @"\csgo\maps");
 
             int compressionLevel = trackBarCompressionLevel.Value;
@@ -115,19 +115,19 @@ namespace QuickFastDLUpdater
 
                 Thread execThread = new Thread(delegate ()
                 {
-                    BZip2Compressor.CompressFiles(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, progressBar, this);
+                    BZip2Compressor.compressFiles(filesArr, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, progressBar, this);
                 });
                 execThread.IsBackground = true;
                 execThread.Start();
             }
             else // Compress .bsp files matching prefix
             {
-                FileInfo[] matchingFiles = GetMatchingFiles(di, prefixArr, "*.bsp");
+                FileInfo[] matchingFiles = getMatchingFiles(di, prefixArr, "*.bsp");
                 progressBar.Maximum = matchingFiles.Length * progressBar.Step;
 
                 Thread execThread = new Thread(delegate ()
                 {
-                    BZip2Compressor.CompressFiles(matchingFiles, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, progressBar, this);
+                    BZip2Compressor.compressFiles(matchingFiles, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusText, progressBar, this);
                 })
                 {
                     IsBackground = true
@@ -136,12 +136,12 @@ namespace QuickFastDLUpdater
 
                 if (checkBoxIncNav.Checked)
                 {
-                    FileInfo[] matchingNavFiles = GetMatchingFiles(di, prefixArr, "*.nav");
+                    FileInfo[] matchingNavFiles = getMatchingFiles(di, prefixArr, "*.nav");
                     progressBarNav.Maximum = matchingNavFiles.Length * progressBarNav.Step;
 
                     Thread execNavThread = new Thread(delegate ()
                     {
-                        BZip2Compressor.CompressFiles(matchingNavFiles, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusNavText, progressBarNav, this);
+                        BZip2Compressor.compressFiles(matchingNavFiles, textBoxFastDLpath.Text + @"\maps\", compressionLevel, labelStatusNavText, progressBarNav, this);
                     })
                     {
                         IsBackground = true
@@ -182,13 +182,15 @@ namespace QuickFastDLUpdater
 
         // Funcs
 
+        //private FileInto[] remove
+
         /// <summary>
         /// Fetch an array of files matching given prefix(es).
         /// </summary>
         /// <param name="dirInfo">Given directory of files.</param>
         /// <param name="prefixes">Array of prefix that will be matched against files in given directory.</param>
         /// <returns></returns>
-        private FileInfo[] GetMatchingFiles(DirectoryInfo dirInfo, string[] prefixes, string extension)
+        private FileInfo[] getMatchingFiles(DirectoryInfo dirInfo, string[] prefixes, string extension)
         {
             List<FileInfo> matchingFilesList = new List<FileInfo>();
             FileInfo[] dirFiles = dirInfo.GetFiles(extension);
@@ -201,29 +203,29 @@ namespace QuickFastDLUpdater
             return matchingFilesList.ToArray();
         }
 
-        private void SetStatusText(string text)
+        private void setStatusText(string text)
         {
             labelStatusText.Text = text;
         }
 
-        private string[] GetPrefixArray()
+        private string[] getPrefixArray()
         {
             return listViewPrefix.Items.Cast<ListViewItem>().Select(item => item.Text).ToList().ToArray<string>();
         }
 
-        private bool Sanitycheck()
+        private bool sanitycheck()
         {
-            SetStatusText("Sanity check started...");
+            setStatusText("Sanity check started...");
             if (string.IsNullOrWhiteSpace(textBoxServerpath.Text)) // Check if server textbox has text
             {
                 MessageBox.Show("Server path: GIVEN\n\nNo server path was given.", "No server path given", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SetStatusText("Sanity check: FAILED");
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
             else if (string.IsNullOrWhiteSpace(textBoxFastDLpath.Text)) // Check if fastdl textbox has text
             {
                 MessageBox.Show("Server path: GIVEN\nFastDL path: NOT GIVEN\n\nNo path to FastDL was given.", "No FastDL path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SetStatusText("Sanity check: FAILED");
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
 
@@ -240,25 +242,25 @@ namespace QuickFastDLUpdater
             if (!srcdsExists)
             {
                 MessageBox.Show("Server path: INVALID\n\nPlease check that you entered the correct server path.\n(Same folder as 'srcds.exe')", "Invalid server path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SetStatusText("Sanity check: FAILED");
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
 
             if (!Directory.Exists(textBoxFastDLpath.Text))
             {
                 MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path does not exist.", "FastDL path does not exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SetStatusText("Sanity check: FAILED");
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
 
             if (!Directory.Exists(textBoxFastDLpath.Text + @"\maps"))
             {
                 MessageBox.Show("Server path: OK\nFastDL path: INVALID\n\nGiven FastDL path is missing a \"maps\" folder.", "FastDL path missing \"maps\" folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SetStatusText("Sanity check: FAILED");
+                setStatusText("Sanity check: FAILED");
                 return false;
             }
 
-            SetStatusText("Sanity check: OK. Ready");
+            setStatusText("Sanity check: OK. Ready");
             return true;
         }
     }
